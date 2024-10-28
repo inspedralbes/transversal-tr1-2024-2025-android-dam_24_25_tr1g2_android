@@ -6,16 +6,17 @@ class Carrito {
     private val productos: MutableList<Producto> = mutableListOf()
 
     fun agregarProducto(producto: Producto) {
-        productos.add(producto)
+        val existente = productos.find { it.id == producto.id }
+        if (existente != null) {
+            existente.cantidad++
+        } else {
+            productos.add(producto)
+        }
     }
 
-    fun obtenerProductos(): List<Producto> {
-        return productos
-    }
+    fun obtenerProductos(): List<Producto> = productos
 
-    fun calcularPrecioTotal(): Double {
-        return productos.sumOf { it.precio.toDouble() }
-    }
+    fun calcularPrecioTotal(): Double = productos.sumOf { it.precio.toDouble() * it.cantidad }
 
     fun vaciarCarrito() {
         productos.clear()

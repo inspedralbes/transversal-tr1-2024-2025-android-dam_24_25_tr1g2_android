@@ -26,7 +26,11 @@
             android:name=".Tienda"
             android:exported="true"
             android:theme="@style/Theme.Projecte12" />
-        <activity android:name=".CarritoActivity"/>
+        <activity
+            android:name=".CarritoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Projecte12" />
+
     </application>
 
 
