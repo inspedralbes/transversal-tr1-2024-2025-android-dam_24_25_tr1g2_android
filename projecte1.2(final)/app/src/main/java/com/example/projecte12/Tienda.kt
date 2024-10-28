@@ -1,5 +1,6 @@
 package com.example.projecte12
 
+import Producto
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -20,16 +21,27 @@ class Tienda : AppCompatActivity() {
 
     private var productos: List<Producto> = emptyList()
     private lateinit var productosContainer: LinearLayout
-
+    private lateinit var botonCarrito: Button
+    private val carrito = Carrito()  // Instancia del carrito
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tienda)
         productosContainer = findViewById(R.id.productosContainer)
-        fechPreoductos()
+        botonCarrito = findViewById(R.id.botonCarrito)
+
+        fetchProductos()
+
+        botonCarrito.setOnClickListener {
+            val intent = Intent(this, CarritoActivity::class.java)
+            intent.putParcelableArrayListExtra("carrito_productos", ArrayList(carrito.obtenerProductos()))
+            startActivity(intent)
+        }
+
     }
-    private fun fechPreoductos() {
+
+    private fun fetchProductos() {
         val call = RetroFit.api.getProductos()
         call.enqueue(object : Callback<List<Producto>> {
             override fun onResponse(call: Call<List<Producto>>, response: Response<List<Producto>>) {
@@ -65,13 +77,12 @@ class Tienda : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId")
     private fun displayProductos(productos: List<Producto>) {
-
         for (producto in productos) {
-
             val view = LayoutInflater.from(this).inflate(R.layout.item_product_simple, productosContainer, false)
             val productName: TextView = view.findViewById(R.id.productName)
             val productPrice: TextView = view.findViewById(R.id.productPrice)
             val productImage: ImageView = view.findViewById(R.id.productImagen)
+            val addToCartButton: Button = view.findViewById(R.id.addToCartButton)
 
             productName.text = producto.producto
             productPrice.text = producto.precio
@@ -80,10 +91,18 @@ class Tienda : AppCompatActivity() {
                 .load(producto.imagen)
                 .into(productImage)
 
+            // Lógica para agregar al carrito
+            addToCartButton.setOnClickListener {
+                carrito.agregarProducto(producto)
+                showToast("${producto.producto} agregado al carrito.")
+            }
+
             productosContainer.addView(view)
         }
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
+
