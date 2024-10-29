@@ -10,6 +10,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.util.Date
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
 
 class CarritoActivity : AppCompatActivity() {
 
@@ -111,14 +115,40 @@ class CarritoActivity : AppCompatActivity() {
     }
 
     private fun procesarCompra(productos: ArrayList<Producto>) {
-        // Aquí puedes manejar el proceso de compra (guardar en base de datos, enviar a servidor, etc.)
-        Toast.makeText(this, "Compra realizada con éxito.", Toast.LENGTH_LONG).show()
+        // Genera los detalles de la compra en formato JSON o String
+        val detallesCompra = productos.joinToString(",") { "${it.producto} x ${it.cantidad}" }
+        val totalCompra = productos.sumOf { it.precio.toDouble() * it.cantidad }
 
-        // Opción: Vaciar el carrito y volver a la pantalla de la tienda
-        productos.clear()
-        totalTextView.text = "Total: 0.0"
-        carritoContainer.removeAllViews()
+        // Crear el objeto pedido para enviar al servidor
+        val pedido = Pedidios(
+            id = 0,  // El ID se autogenerará en la BD
+            usuario_id = 1,  // Supón que tienes un ID de usuario (puedes cambiar este valor según la sesión del usuario)
+            detalles = detallesCompra,
+            total = totalCompra.toFloat(),
+            fecha = Date()
+        )
 
-        finish()  // Cerrar la actividad después de la compra
+        // Envuelve el objeto pedido en una lista
+        val listaDePedidos = listOf(pedido)
+
+        // Llamar a la API para registrar la compra
+        val call = RetroFit.api.registrarCompra(listaDePedidos)
+        call.enqueue(object : Callback<Unit> {
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@CarritoActivity, "Compra realizada con éxito.", Toast.LENGTH_LONG).show()
+                    productos.clear()
+                    totalTextView.text = "Total: 0.0"
+                    carritoContainer.removeAllViews()
+                    finish() // Cerrar la actividad después de la compra
+                } else {
+                    Toast.makeText(this@CarritoActivity, "Error al registrar la compra.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                Toast.makeText(this@CarritoActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
