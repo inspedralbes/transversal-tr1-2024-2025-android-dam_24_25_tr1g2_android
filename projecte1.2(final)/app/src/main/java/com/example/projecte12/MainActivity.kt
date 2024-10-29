@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, Tienda::class.java)
+        val intent = Intent(this, Login::class.java)
         startActivity(intent)
     }
 }

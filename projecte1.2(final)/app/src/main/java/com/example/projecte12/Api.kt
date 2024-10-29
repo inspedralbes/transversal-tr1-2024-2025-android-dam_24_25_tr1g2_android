@@ -12,4 +12,10 @@ interface Api {
 
     @POST("/registrarCompra")
     fun registrarCompra(@Body pedidos: List<Pedidios>): Call<Unit>
+
+    @POST("/getLogin")
+    fun login(@Body loginRequest: RegisterRequest): Call<Void>
+
+    @POST("/getLogin")
+    fun register(@Body registerRequest: RegisterRequest): Call<Void>
 }

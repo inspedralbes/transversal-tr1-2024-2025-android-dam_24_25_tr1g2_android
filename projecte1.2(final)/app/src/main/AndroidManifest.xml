@@ -30,6 +30,14 @@
             android:name=".CarritoActivity"
             android:exported="true"
             android:theme="@style/Theme.Projecte12" />
+        <activity
+            android:name=".Login"
+            android:exported="true"
+            android:theme="@style/Theme.Projecte12" />
+        <activity
+            android:name=".Registrar"
+            android:exported="true"
+            android:theme="@style/Theme.Projecte12" />
 
     </application>
 

@@ -15,10 +15,4 @@ class Carrito {
     }
 
     fun obtenerProductos(): List<Producto> = productos
-
-    fun calcularPrecioTotal(): Double = productos.sumOf { it.precio.toDouble() * it.cantidad }
-
-    fun vaciarCarrito() {
-        productos.clear()
-    }
 }

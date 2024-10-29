@@ -26,7 +26,12 @@ class Tienda : AppCompatActivity() {
     private lateinit var productosContainer: LinearLayout
     private lateinit var botonCarrito: Button
     private lateinit var searchEditText: EditText
-    private val carrito = Carrito()  // Instancia del carrito
+    private val carrito = Carrito()
+    private lateinit var userInfoTextView: TextView
+    private lateinit var loginButtonInStore: Button
+    private lateinit var registerButtonInStore: Button
+    private lateinit var viewUserInfoButton: Button // Nuevo botón para ver información del usuario
+    private lateinit var skipLoginButton: Button // Botón para entrar sin iniciar sesión
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,17 +42,60 @@ class Tienda : AppCompatActivity() {
         productosContainer = findViewById(R.id.productosContainer)
         botonCarrito = findViewById(R.id.botonCarrito)
         searchEditText = findViewById(R.id.searchEditText)
+        userInfoTextView = findViewById(R.id.userInfoTextView)
+        loginButtonInStore = findViewById(R.id.loginButtonInStore)
+        registerButtonInStore = findViewById(R.id.registerButtonInStore)
+        viewUserInfoButton = findViewById(R.id.viewUserInfoButton) // Inicializar el botón
+        skipLoginButton = findViewById(R.id.skipLoginButton) // Inicializar el botón para entrar sin iniciar sesión
 
         fetchProductos()
 
-        // boton carrito
+        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val userEmail = sharedPreferences.getString("user_email", null)
+        val userPassword = sharedPreferences.getString("user_password", null)
+
+        if (userEmail != null) {
+            // Usuario registrado
+            userInfoTextView.text = "Usuario: $userEmail"
+            loginButtonInStore.visibility = Button.GONE
+            registerButtonInStore.visibility = Button.GONE
+            viewUserInfoButton.visibility = Button.VISIBLE // Mostrar el botón de ver información
+            viewUserInfoButton.setOnClickListener {
+                showUserInfo(userEmail, userPassword)
+            }
+            skipLoginButton.visibility = Button.GONE // Ocultar el botón de invitado
+        } else {
+            // No hay sesión iniciada
+            userInfoTextView.text = "No has iniciado sesión"
+            loginButtonInStore.visibility = Button.VISIBLE
+            registerButtonInStore.visibility = Button.VISIBLE
+            skipLoginButton.visibility = Button.VISIBLE // Mostrar botón para entrar como invitado
+
+            loginButtonInStore.setOnClickListener {
+                startActivity(Intent(this, Login::class.java))
+            }
+            registerButtonInStore.setOnClickListener {
+                startActivity(Intent(this, Registrar::class.java))
+            }
+            skipLoginButton.setOnClickListener {
+                // Lógica para entrar como invitado
+                Toast.makeText(this, "Entrando como invitado.", Toast.LENGTH_SHORT).show()
+                userInfoTextView.text = "Usuario: Invitado"
+                loginButtonInStore.visibility = Button.GONE
+                registerButtonInStore.visibility = Button.GONE
+                skipLoginButton.visibility = Button.GONE
+                viewUserInfoButton.visibility = Button.GONE
+            }
+        }
+
+        // Botón carrito
         botonCarrito.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)
             intent.putParcelableArrayListExtra("carrito_productos", ArrayList(carrito.obtenerProductos()))
             startActivity(intent)
         }
 
-        // filtrar produc
+        // Filtrar productos
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -58,6 +106,7 @@ class Tienda : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
     }
+
 
     private fun fetchProductos() {
         val call = RetroFit.api.getProductos()
@@ -122,6 +171,11 @@ class Tienda : AppCompatActivity() {
     private fun filterProductos(query: String) {
         val filteredProductos = productos.filter { it.producto.contains(query, ignoreCase = true) }
         displayProductos(filteredProductos) // Muestra los productos filtrados
+    }
+
+    private fun showUserInfo(email: String?, password: String?) {
+        // Mostrar un Toast con la información del usuario
+        Toast.makeText(this, "Email: $email\nContraseña: $password", Toast.LENGTH_LONG).show()
     }
 
     private fun showToast(message: String) {
