@@ -3,6 +3,7 @@ package com.example.projecte12
 import Producto
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log // Importar para el log de depuración
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -10,10 +11,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.ResponseBody
 import java.util.Date
 import retrofit2.Callback
 import retrofit2.Call
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class CarritoActivity : AppCompatActivity() {
 
@@ -21,8 +25,7 @@ class CarritoActivity : AppCompatActivity() {
     private lateinit var totalTextView: TextView
     private lateinit var botonAtras: Button
     private lateinit var botonComprar: Button
-
-    private lateinit var productos: ArrayList<Producto> // Agregar variable para productos
+    private lateinit var productos: ArrayList<Producto>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +64,8 @@ class CarritoActivity : AppCompatActivity() {
         var total = 0.0
 
         for (producto in productos) {
-            val view = LayoutInflater.from(this).inflate(R.layout.item_carrito_simple, carritoContainer, false)
+            val view = LayoutInflater.from(this)
+                .inflate(R.layout.item_carrito_simple, carritoContainer, false)
             val productName: TextView = view.findViewById(R.id.productName)
             val productPrice: TextView = view.findViewById(R.id.productPrice)
             val cantidadTextView: TextView = view.findViewById(R.id.cantidadTextView)
@@ -90,7 +94,8 @@ class CarritoActivity : AppCompatActivity() {
                     cantidadTextView.text = producto.cantidad.toString()
                     actualizarTotal()
                 } else {
-                    Toast.makeText(this, "La cantidad no puede ser menor a 1", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "La cantidad no puede ser menor a 1", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
@@ -118,36 +123,59 @@ class CarritoActivity : AppCompatActivity() {
         // Genera los detalles de la compra en formato JSON o String
         val detallesCompra = productos.joinToString(",") { "${it.producto} x ${it.cantidad}" }
         val totalCompra = productos.sumOf { it.precio.toDouble() * it.cantidad }
+        val formatoFecha = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val fechaFormateada = formatoFecha.format(Date())
 
         // Crear el objeto pedido para enviar al servidor
-        val pedido = Pedidios(
-            id = 0,  // El ID se autogenerará en la BD
-            usuario_id = 1,  // Supón que tienes un ID de usuario (puedes cambiar este valor según la sesión del usuario)
+        val pedido = Pedido(
+            usuario_id = 1,
             detalles = detallesCompra,
-            total = totalCompra.toFloat(),
-            fecha = Date()
+            estado = "Pendiente",
+            total = totalCompra.toDouble(),
+            fecha_pedido = fechaFormateada
         )
 
         // Envuelve el objeto pedido en una lista
         val listaDePedidos = listOf(pedido)
 
-        // Llamar a la API para registrar la compra
+        // Log para ver los datos del pedido antes de enviarlos
+        Log.d("CompraEnviada", "Datos de la compra: $pedido")
+
+// Llamar a la API para registrar la compra
         val call = RetroFit.api.registrarCompra(listaDePedidos)
-        call.enqueue(object : Callback<Unit> {
-            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+        call.enqueue(object : Callback<ResponseBody> { // Cambia Unit a ResponseBody
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@CarritoActivity, "Compra realizada con éxito.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@CarritoActivity,
+                        "Compra realizada con éxito.",
+                        Toast.LENGTH_LONG
+                    ).show()
                     productos.clear()
                     totalTextView.text = "Total: 0.0"
                     carritoContainer.removeAllViews()
                     finish() // Cerrar la actividad después de la compra
                 } else {
-                    Toast.makeText(this@CarritoActivity, "Error al registrar la compra.", Toast.LENGTH_SHORT).show()
+                    // Log de respuesta en caso de fallo
+                    Log.e(
+                        "ErrorCompra",
+                        "Error al registrar la compra: ${response.errorBody()?.string()}"
+                    )
+                    Toast.makeText(
+                        this@CarritoActivity,
+                        "Error al registrar la compra.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
-            override fun onFailure(call: Call<Unit>, t: Throwable) {
-                Toast.makeText(this@CarritoActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("ErrorConexion", "Error de conexión: ${t.message}")
+                Toast.makeText(
+                    this@CarritoActivity,
+                    "Error de conexión: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
