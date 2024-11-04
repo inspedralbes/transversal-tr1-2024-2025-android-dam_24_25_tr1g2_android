@@ -40,7 +40,7 @@ class Login : AppCompatActivity() {
 
             if (validateLogin(email, password)) {
                 Toast.makeText(this, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, Tienda::class.java) // Inicia StoreActivity
+                val intent = Intent(this, Tienda::class.java) // Inicia Tienda
                 startActivity(intent)
                 finish() // Opcional: cerrar LoginActivity
             } else {
@@ -56,12 +56,10 @@ class Login : AppCompatActivity() {
 
         // Configurar botón para entrar como invitado
         guestLoginButton.setOnClickListener {
-            // Aquí puedes manejar la lógica para entrar como invitado
             Toast.makeText(this, "Entrando como invitado.", Toast.LENGTH_SHORT).show()
 
-            // Iniciar la actividad de Tienda sin iniciar sesión
             val intent = Intent(this, Tienda::class.java)
-            intent.putExtra("guest", true) // Agregar un extra para identificar que es un invitado
+            intent.putExtra("guest", true) // Extra para indicar modo invitado
             startActivity(intent)
             finish()
         }
@@ -74,4 +72,3 @@ class Login : AppCompatActivity() {
         return email == savedEmail && password == savedPassword
     }
 }
-

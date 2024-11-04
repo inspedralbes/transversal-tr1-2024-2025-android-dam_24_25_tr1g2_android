@@ -36,7 +36,7 @@ class Tienda : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tienda) // Asegúrate de que el layout es correcto
+        setContentView(R.layout.tienda)
 
         // Inicializa las vistas
         productosContainer = findViewById(R.id.productosContainer)
@@ -45,8 +45,8 @@ class Tienda : AppCompatActivity() {
         userInfoTextView = findViewById(R.id.userInfoTextView)
         loginButtonInStore = findViewById(R.id.loginButtonInStore)
         registerButtonInStore = findViewById(R.id.registerButtonInStore)
-        viewUserInfoButton = findViewById(R.id.viewUserInfoButton) // Inicializar el botón
-        skipLoginButton = findViewById(R.id.skipLoginButton) // Inicializar el botón para entrar sin iniciar sesión
+        viewUserInfoButton = findViewById(R.id.viewUserInfoButton)
+        skipLoginButton = findViewById(R.id.skipLoginButton)
 
         fetchProductos()
 
@@ -54,23 +54,31 @@ class Tienda : AppCompatActivity() {
         val userEmail = sharedPreferences.getString("user_email", null)
         val userPassword = sharedPreferences.getString("user_password", null)
 
-        if (userEmail != null) {
-            // Usuario registrado
+        val isGuest = intent.getBooleanExtra("guest", false)
+
+        if (isGuest) {
+            // Configuración para el modo invitado
+            userInfoTextView.text = "Usuario: Invitado"
+            loginButtonInStore.visibility = Button.GONE
+            registerButtonInStore.visibility = Button.GONE
+            skipLoginButton.visibility = Button.GONE
+            viewUserInfoButton.visibility = Button.GONE
+        } else if (userEmail != null) {
+            // Configuración para el usuario registrado
             userInfoTextView.text = "Usuario: $userEmail"
             loginButtonInStore.visibility = Button.GONE
             registerButtonInStore.visibility = Button.GONE
-            viewUserInfoButton.visibility = Button.VISIBLE // Mostrar el botón de ver información
+            viewUserInfoButton.visibility = Button.VISIBLE
             viewUserInfoButton.setOnClickListener {
                 showUserInfo(userEmail, userPassword)
             }
-            skipLoginButton.visibility = Button.GONE // Ocultar el botón de invitado
+            skipLoginButton.visibility = Button.GONE
         } else {
-            // No hay sesión iniciada
+            // Configuración cuando no se ha iniciado sesión
             userInfoTextView.text = "No has iniciado sesión"
             loginButtonInStore.visibility = Button.VISIBLE
             registerButtonInStore.visibility = Button.VISIBLE
-            skipLoginButton.visibility = Button.VISIBLE // Mostrar botón para entrar como invitado
-
+            skipLoginButton.visibility = Button.VISIBLE
             loginButtonInStore.setOnClickListener {
                 startActivity(Intent(this, Login::class.java))
             }
@@ -107,7 +115,6 @@ class Tienda : AppCompatActivity() {
         })
     }
 
-
     private fun fetchProductos() {
         val call = RetroFit.api.getProductos()
         call.enqueue(object : Callback<List<Producto>> {
@@ -143,7 +150,7 @@ class Tienda : AppCompatActivity() {
     }
 
     private fun displayProductos(productos: List<Producto>) {
-        productosContainer.removeAllViews() // Limpia el contenedor antes de añadir los productos
+        productosContainer.removeAllViews()
         for (producto in productos) {
             val view = LayoutInflater.from(this).inflate(R.layout.item_product_simple, productosContainer, false)
             val productName: TextView = view.findViewById(R.id.productName)
@@ -158,7 +165,6 @@ class Tienda : AppCompatActivity() {
                 .load(producto.imagen)
                 .into(productImage)
 
-            // Lógica para agregar al carrito
             addToCartButton.setOnClickListener {
                 carrito.agregarProducto(producto)
                 showToast("${producto.producto} agregado al carrito.")
@@ -170,11 +176,10 @@ class Tienda : AppCompatActivity() {
 
     private fun filterProductos(query: String) {
         val filteredProductos = productos.filter { it.producto.contains(query, ignoreCase = true) }
-        displayProductos(filteredProductos) // Muestra los productos filtrados
+        displayProductos(filteredProductos)
     }
 
     private fun showUserInfo(email: String?, password: String?) {
-        // Mostrar un Toast con la información del usuario
         Toast.makeText(this, "Email: $email\nContraseña: $password", Toast.LENGTH_LONG).show()
     }
 
