@@ -29,7 +29,7 @@
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarse"/>
+        android:text="¿Ets un client nou? Registrat "/>
 
     <Button
         android:id="@+id/guestLoginButton"
