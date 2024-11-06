@@ -1,6 +1,5 @@
-<!-- login.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,30 +9,37 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"/>
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contraseña"
-        android:inputType="textPassword"/>
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/loginButton"
+        style="@style/AppTheme.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión"/>
+        android:text="@string/login"
+        android:layout_marginBottom="16dp"/>
 
     <TextView
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Ets un client nou? Registrat "/>
+        android:text="@string/new_client"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/guestLoginButton"
+        style="@style/AppTheme.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Entrar como Invitado"/>
+        android:text="@string/guest_login"/>
 </LinearLayout>

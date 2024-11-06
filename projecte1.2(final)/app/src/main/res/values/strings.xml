@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">RACOGLOP</string>
+    <string name="back">Atrás</string>
+    <string name="buy">Comprar</string>
+    <string name="total">Total: %1$s</string>
+    <string name="add_to_cart">Añadir al Carrito</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="register">Registrar</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="new_client">¿Eres un cliente nuevo? Regístrate</string>
+    <string name="guest_login">Entrar como Invitado</string>
+    <string name="search_hint">Buscar productos</string>
+    <string name="view_user_info">Ver Información del Usuario</string>
+    <string name="cart">Carrito</string>
 </resources>

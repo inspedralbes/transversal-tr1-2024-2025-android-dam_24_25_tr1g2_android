@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- Contenedor de los productos del carrito -->
-    <LinearLayout
-        android:id="@+id/carritoContainer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <!-- Texto del total -->
+        <LinearLayout
+            android:id="@+id/carritoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
     <TextView
         android:id="@+id/totalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total: 0"
+        android:text="@string/total"
         android:textSize="20sp"
-        android:layout_gravity="end"/>
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Botones de Atrás y Comprar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        android:layout_marginTop="16dp">
 
-        <!-- Botón de Atrás -->
         <Button
             android:id="@+id/botonAtras"
+            style="@style/AppTheme.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Atrás"/>
+            android:text="@string/back"/>
 
-        <!-- Botón de Comprar -->
         <Button
             android:id="@+id/botonComprar"
+            style="@style/AppTheme.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comprar"
+            android:text="@string/buy"
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 </LinearLayout>

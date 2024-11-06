@@ -3,53 +3,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/userInfoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No has iniciado sesión" />
+            android:text="No has iniciado sesión"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Buscar productos" />
+            android:hint="@string/search_hint"
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/loginButtonInStore"
-            android:layout_width="wrap_content"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesión" />
+            android:text="@string/login"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/registerButtonInStore"
-            android:layout_width="wrap_content"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrar" />
+            android:text="@string/register"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/viewUserInfoButton"
-            android:layout_width="wrap_content"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver Información del Usuario"
-            android:visibility="gone" />
+            android:text="@string/view_user_info"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/skipLoginButton"
-            android:layout_width="wrap_content"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Entrar como Invitado" />
+            android:text="@string/guest_login"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/botonCarrito"
-            android:layout_width="wrap_content"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Carrito" />
+            android:text="@string/cart"
+            android:layout_marginBottom="16dp"/>
 
         <LinearLayout
             android:id="@+id/productosContainer"
@@ -57,6 +70,4 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </LinearLayout>
-
-
 </ScrollView>

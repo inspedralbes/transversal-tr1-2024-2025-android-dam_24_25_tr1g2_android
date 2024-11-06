@@ -9,7 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="purple_900">#1B0D6B</color>
-
-
-
+    <color name="accent_color">#FFA500</color>
 </resources>

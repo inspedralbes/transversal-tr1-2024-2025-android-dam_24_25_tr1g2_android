@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -22,25 +21,30 @@
 
     <Button
         android:id="@+id/decrementButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:text="-" />
 
     <TextView
         android:id="@+id/cantidadTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1" />
+        android:text="1"
+        android:layout_marginHorizontal="8dp"/>
 
     <Button
         android:id="@+id/incrementButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:text="+" />
 
-    <Button
+    <ImageButton
         android:id="@+id/eliminarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Eliminar" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="Eliminar"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 </LinearLayout>
