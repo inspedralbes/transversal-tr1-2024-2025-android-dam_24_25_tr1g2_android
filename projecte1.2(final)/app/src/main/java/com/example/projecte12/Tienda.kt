@@ -161,8 +161,10 @@ class Tienda : AppCompatActivity() {
             productName.text = producto.producto
             productPrice.text = producto.precio
 
+            // Aquí se carga la imagen utilizando Glide y la URL construida
+            val imageUrl = "http://10.0.2.2:3001/imagen/${producto.imagen}"
             Glide.with(this)
-                .load(producto.imagen)
+                .load(imageUrl)
                 .into(productImage)
 
             addToCartButton.setOnClickListener {
