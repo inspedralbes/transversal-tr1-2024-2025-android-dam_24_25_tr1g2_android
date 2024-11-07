@@ -6,7 +6,6 @@
     android:padding="16dp"
     android:background="@color/white">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,7 +15,8 @@
             android:id="@+id/carritoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:spacing="8dp"/>
 
     </ScrollView>
 
@@ -27,21 +27,24 @@
         android:text="@string/total"
         android:textSize="20sp"
         android:layout_gravity="end"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:paddingEnd="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:spacing="16dp">
 
         <Button
             android:id="@+id/botonAtras"
             style="@style/AppTheme.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/back"/>
+            android:text="@string/back"
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/botonComprar"
@@ -49,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/buy"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="8dp" />
     </LinearLayout>
+
 </LinearLayout>

@@ -44,10 +44,16 @@ class CarritoActivity : AppCompatActivity() {
             totalTextView.text = "Carrito vacío"
         }
 
+
+
         // Acción del botón "Atrás"
         botonAtras.setOnClickListener {
-            finish()  // Vuelve a la actividad anterior
+            val intent = Intent(this, Tienda::class.java)
+            startActivity(intent)
+            finish()  // Finaliza la actividad actual
         }
+
+
 
         // Acción del botón "Comprar"
         botonComprar.setOnClickListener {
@@ -141,7 +147,7 @@ class CarritoActivity : AppCompatActivity() {
         // Log para ver los datos del pedido antes de enviarlos
         Log.d("CompraEnviada", "Datos de la compra: $pedido")
 
-// Llamar a la API para registrar la compra
+        // Llamar a la API para registrar la compra
         val call = RetroFit.api.registrarCompra(listaDePedidos)
         call.enqueue(object : Callback<ResponseBody> { // Cambia Unit a ResponseBody
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
