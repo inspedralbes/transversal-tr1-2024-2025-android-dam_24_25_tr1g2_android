@@ -3,6 +3,7 @@ package com.example.projecte12
 import Producto
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -40,7 +41,6 @@ class Tienda : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tienda)
 
-
         // Inicializa las vistas
         productosContainer = findViewById(R.id.productosContainer)
         botonCarrito = findViewById(R.id.botonCarrito)
@@ -53,13 +53,15 @@ class Tienda : AppCompatActivity() {
         cartIcon = findViewById(R.id.cartIcon)
 
         fetchProductos()
+
+        // Botón de carrito
         cartIcon.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)
             intent.putParcelableArrayListExtra("carrito_productos", ArrayList(carrito.obtenerProductos()))
             startActivity(intent)
         }
 
-
+        // Recuperar las preferencias de usuario
         val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
         val userEmail = sharedPreferences.getString("user_email", null)
         val userPassword = sharedPreferences.getString("user_password", null)
@@ -71,7 +73,7 @@ class Tienda : AppCompatActivity() {
             userInfoTextView.text = "Usuario: Invitado"
             loginButtonInStore.visibility = Button.GONE
             registerButtonInStore.visibility = Button.GONE
-            skipLoginButton.visibility = Button.GONE
+            skipLoginButton.visibility = Button.VISIBLE
             viewUserInfoButton.visibility = Button.GONE
         } else if (userEmail != null) {
             // Configuración para el usuario registrado
@@ -82,7 +84,7 @@ class Tienda : AppCompatActivity() {
             viewUserInfoButton.setOnClickListener {
                 showUserInfo(userEmail, userPassword)
             }
-            skipLoginButton.visibility = Button.GONE
+            skipLoginButton.visibility = Button.VISIBLE
         } else {
             // Configuración cuando no se ha iniciado sesión
             userInfoTextView.text = "No has iniciado sesión"
@@ -101,16 +103,9 @@ class Tienda : AppCompatActivity() {
                 userInfoTextView.text = "Usuario: Invitado"
                 loginButtonInStore.visibility = Button.GONE
                 registerButtonInStore.visibility = Button.GONE
-                skipLoginButton.visibility = Button.GONE
+                skipLoginButton.visibility = Button.VISIBLE
                 viewUserInfoButton.visibility = Button.GONE
             }
-        }
-
-        // Botón carrito
-        botonCarrito.setOnClickListener {
-            val intent = Intent(this, CarritoActivity::class.java)
-            intent.putParcelableArrayListExtra("carrito_productos", ArrayList(carrito.obtenerProductos()))
-            startActivity(intent)
         }
 
         // Filtrar productos
@@ -123,6 +118,13 @@ class Tienda : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // Configuración para el botón skipLoginButton
+        skipLoginButton.setOnClickListener {
+            // Iniciar la actividad de Login cuando el usuario haga clic en el botón
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fetchProductos() {
@@ -199,6 +201,3 @@ class Tienda : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
-
-
-
