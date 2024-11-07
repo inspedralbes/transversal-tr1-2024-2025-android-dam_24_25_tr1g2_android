@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -32,11 +33,13 @@ class Tienda : AppCompatActivity() {
     private lateinit var registerButtonInStore: Button
     private lateinit var viewUserInfoButton: Button // Nuevo botón para ver información del usuario
     private lateinit var skipLoginButton: Button // Botón para entrar sin iniciar sesión
+    private lateinit var cartIcon: ImageButton
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tienda)
+
 
         // Inicializa las vistas
         productosContainer = findViewById(R.id.productosContainer)
@@ -47,8 +50,15 @@ class Tienda : AppCompatActivity() {
         registerButtonInStore = findViewById(R.id.registerButtonInStore)
         viewUserInfoButton = findViewById(R.id.viewUserInfoButton)
         skipLoginButton = findViewById(R.id.skipLoginButton)
+        cartIcon = findViewById(R.id.cartIcon)
 
         fetchProductos()
+        cartIcon.setOnClickListener {
+            val intent = Intent(this, CarritoActivity::class.java)
+            intent.putParcelableArrayListExtra("carrito_productos", ArrayList(carrito.obtenerProductos()))
+            startActivity(intent)
+        }
+
 
         val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
         val userEmail = sharedPreferences.getString("user_email", null)
@@ -189,3 +199,6 @@ class Tienda : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
+
+
+
