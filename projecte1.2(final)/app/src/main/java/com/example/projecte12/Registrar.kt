@@ -1,10 +1,12 @@
 package com.example.projecte12
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,6 +15,7 @@ class Registrar : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var registerButton: Button
+    private lateinit var backToLoginButton: Button
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -23,6 +26,7 @@ class Registrar : AppCompatActivity() {
         emailEditText = findViewById(R.id.registerEmailEditText)
         passwordEditText = findViewById(R.id.registerPasswordEditText)
         registerButton = findViewById(R.id.registerSubmitButton)
+        backToLoginButton = findViewById(R.id.backToLoginButton)
 
         // Inicializar SharedPreferences
         sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
@@ -37,6 +41,14 @@ class Registrar : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Por favor, introduce un email y contraseña válidos", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // Configuración del botón "Volver al Login"
+        backToLoginButton.setOnClickListener {
+            // Redirigir a la actividad de Login
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish() // Cierra la actividad de registro
         }
     }
 

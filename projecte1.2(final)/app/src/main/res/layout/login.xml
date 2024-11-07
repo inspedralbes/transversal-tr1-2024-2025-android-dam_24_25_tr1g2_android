@@ -59,6 +59,15 @@
             android:layout_height="wrap_content"
             android:text="@string/login" />
 
+        <Button
+            android:id="@+id/guestLoginButton"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/guest_login"
+            android:layout_marginTop="16dp"/>
+
+
         <TextView
             android:id="@+id/registerTextView"
             android:layout_width="wrap_content"
@@ -68,13 +77,6 @@
             android:textSize="16sp"
             android:layout_marginTop="16dp"/>
 
-        <Button
-            android:id="@+id/guestLoginButton"
-            style="@style/AppTheme.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/guest_login"
-            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 </RelativeLayout>

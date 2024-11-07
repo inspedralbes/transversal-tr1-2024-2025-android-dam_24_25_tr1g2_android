@@ -5,8 +5,6 @@
     android:background="@color/white"
     android:padding="24dp">
 
-
-
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="48dp"
@@ -76,10 +74,10 @@
 
             <Button
                 android:id="@+id/registerSubmitButton"
-                style="@style/AppTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register"/>
+                android:text="@string/register"
+                android:theme="@android:style/Widget.Material.Button"/>
 
             <TextView
                 android:id="@+id/loginLinkTextView"
@@ -92,4 +90,14 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/backToLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RETROCEDER"
+        android:theme="@android:style/Widget.Material.Button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"/>
+
 </RelativeLayout>
