@@ -137,7 +137,7 @@ class CarritoActivity : AppCompatActivity() {
         val pedido = Pedido(
             usuario_id = 1,
             detalles = detallesCompra,
-            estado = "Pendiente",
+            estado = "Rebut",
             total = totalCompra.toDouble(),
             fecha_pedido = fechaFormateada
         )
