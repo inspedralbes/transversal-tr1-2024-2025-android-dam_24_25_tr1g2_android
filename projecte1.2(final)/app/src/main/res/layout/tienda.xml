@@ -26,6 +26,18 @@
     android:paddingEnd="0dp">
 
 
+        <!-- Botón en la parte izquierda con tu imagen -->
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/image"
+            android:contentDescription="@string/back"
+            app:tint="@android:color/black"
+            android:scaleType="centerInside" />
+
     <ImageButton
         android:id="@+id/profileIcon"
         android:layout_width="48dp"
@@ -106,7 +118,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="vertical" />
 
-
+    <!-- Botón para retroceder -->
 <Button
 android:id="@+id/skipLoginButton"
 style="@style/AppTheme.Button"
