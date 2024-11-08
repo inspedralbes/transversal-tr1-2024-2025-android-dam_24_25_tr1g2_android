@@ -18,6 +18,11 @@
 
     <string name="name_hint">Nombre</string>
     <string name="confirm_password_hint">Confirmar contraseña</string>
+    <string name="registerApellidosEditText">Apellidos</string>
+
+    <string name="direccionEditText">Direccion</string>
+
+
     <string name="already_have_account">¿Ya tienes una cuenta? Inicia sesión</string>
 
 

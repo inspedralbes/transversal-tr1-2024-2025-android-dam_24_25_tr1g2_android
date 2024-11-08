@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -75,9 +76,9 @@ class CarritoActivity : AppCompatActivity() {
             val productName: TextView = view.findViewById(R.id.productName)
             val productPrice: TextView = view.findViewById(R.id.productPrice)
             val cantidadTextView: TextView = view.findViewById(R.id.cantidadTextView)
-            val incrementButton: Button = view.findViewById(R.id.incrementButton)
-            val decrementButton: Button = view.findViewById(R.id.decrementButton)
-            val eliminarButton: Button = view.findViewById(R.id.eliminarButton)
+            val incrementButton: ImageButton = view.findViewById(R.id.incrementButton)
+            val decrementButton: ImageButton = view.findViewById(R.id.decrementButton)
+            val eliminarButton: ImageButton = view.findViewById(R.id.eliminarButton)
 
             productName.text = producto.producto
             productPrice.text = producto.precio

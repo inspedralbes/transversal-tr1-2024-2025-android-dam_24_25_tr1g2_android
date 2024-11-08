@@ -1,68 +1,80 @@
 package com.example.projecte12
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import okhttp3.ResponseBody
 
 class Registrar : AppCompatActivity() {
 
+    private lateinit var nombreEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var comfirmarContraseñaEditText: EditText
+    private lateinit var direccionEditText: EditText
     private lateinit var registerButton: Button
-    private lateinit var backToLoginButton: Button
-
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registrar)
 
+        nombreEditText = findViewById(R.id.registerNameEditText)
         emailEditText = findViewById(R.id.registerEmailEditText)
         passwordEditText = findViewById(R.id.registerPasswordEditText)
+        comfirmarContraseñaEditText = findViewById(R.id.registerConfirmPasswordEditText)
+        direccionEditText = findViewById(R.id.direccioEditText)
         registerButton = findViewById(R.id.registerSubmitButton)
-        backToLoginButton = findViewById(R.id.backToLoginButton)
 
         // Inicializar SharedPreferences
         sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
 
         // Configuración del botón de registro
         registerButton.setOnClickListener {
+            val nombre = nombreEditText.text.toString()
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
+            val direccion = direccionEditText.text.toString()
 
-            if (validateInput(email, password)) {
-                registerUser(email, password)
+            println("Email: $email")
+            println("Password: $password")
+
+            if (validateInput(nombre, email, password, direccion)) {
+                registerUser(nombre, email, password, direccion)
             } else {
-                Toast.makeText(this, "Por favor, introduce un email y contraseña válidos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show()
             }
         }
-
-        // Configuración del botón "Volver al Login"
-        backToLoginButton.setOnClickListener {
-            // Redirigir a la actividad de Login
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-            finish() // Cierra la actividad de registro
-        }
     }
 
-    private fun validateInput(email: String, password: String): Boolean {
-        return email.isNotEmpty() && password.isNotEmpty()
+    private fun validateInput(nombre: String, email: String, password: String, direccion: String): Boolean {
+        return nombre.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && direccion.isNotEmpty()
     }
 
-    private fun registerUser(email: String, password: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("email", email)
-        editor.putString("password", password)
-        editor.apply()  // Aplicar los cambios
+    private fun registerUser(nombre: String, email: String, password: String, direccion: String) {
+        val registerRequest = RegisterRequest(nombre, email, password, direccion)
 
-        Toast.makeText(this, "Registro exitoso.", Toast.LENGTH_LONG).show()
-        finish() // Cierra la actividad de registro y regresa a Login
+        RetroFit.api.register(registerRequest).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@Registrar, "Registro exitoso.", Toast.LENGTH_LONG).show()
+                    finish() // Cierra la actividad de registro y regresa a Login
+                } else {
+                    println(call.request())
+                    Toast.makeText(this@Registrar, "Error al registrar el usuario.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(this@Registrar, "Error en la conexión.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
