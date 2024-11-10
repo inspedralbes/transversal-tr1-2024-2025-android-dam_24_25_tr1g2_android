@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">RACOGLOP</string>
     <string name="back">Atrás</string>
     <string name="buy">Comprar</string>
@@ -15,15 +16,15 @@
     <string name="cart">Carrito</string>
     <string name="welcome_message">Bienvenido al RACOGLOP</string>
     <string name="start_shopping">Comenzar a Comprar</string>
-
     <string name="name_hint">Nombre</string>
     <string name="confirm_password_hint">Confirmar contraseña</string>
     <string name="registerApellidosEditText">Apellidos</string>
-
     <string name="direccionEditText">Direccion</string>
-
-
     <string name="already_have_account">¿Ya tienes una cuenta? Inicia sesión</string>
 
+    <string name="profile_picture">Foto de perfil</string>
+    <string name="profile_name">Nombre de Usuario</string>
+    <string name="profile_email">Correo Electrónico</string>
+    <string name="edit_profile">Editar Perfil</string>
 
 </resources>

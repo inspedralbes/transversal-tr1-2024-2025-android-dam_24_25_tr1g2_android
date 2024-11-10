@@ -54,6 +54,22 @@ class Tienda : AppCompatActivity() {
 
         fetchProductos()
 
+
+        val profileImage = findViewById<ImageView>(R.id.profileImage)
+
+        profileImage.setOnClickListener {
+            // Aquí tomamos el correo y nombre del usuario y lo pasamos a la actividad de perfil
+            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+            val userEmail = sharedPreferences.getString("user_email", "Invitado")
+            val userName = sharedPreferences.getString("user_name", "Sin nombre") // Aquí obtenemos el nombre del usuario
+
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("user_email", userEmail)
+            intent.putExtra("user_name", userName)
+            startActivity(intent)
+        }
+
+
         // Botón de carrito
         cartIcon.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)

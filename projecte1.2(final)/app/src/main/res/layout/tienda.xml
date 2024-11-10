@@ -39,7 +39,7 @@
             android:scaleType="centerInside" />
 
     <ImageButton
-        android:id="@+id/profileIcon"
+        android:id="@+id/profileImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="end"

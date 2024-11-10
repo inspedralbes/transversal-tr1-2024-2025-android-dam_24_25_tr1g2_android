@@ -57,6 +57,9 @@
             android:exported="true"
             android:theme="@style/Theme.Projecte12" />
 
+        <activity
+            android:name=".ProfileActivity" />
+
 
     </application>
 
