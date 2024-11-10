@@ -1,5 +1,6 @@
 package com.example.projecte12
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -13,6 +14,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profileName: TextView
     private lateinit var profileEmail: TextView
     private lateinit var editProfileButton: Button
+    private lateinit var loginButton: Button // Añadimos el botón para ir al login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class ProfileActivity : AppCompatActivity() {
         profileName = findViewById(R.id.profileName)
         profileEmail = findViewById(R.id.profileEmail)
         editProfileButton = findViewById(R.id.editProfileButton)
+        loginButton = findViewById(R.id.loginButton) // Inicializamos el nuevo botón
 
         // Recibir datos del Intent
         val userEmail = intent.getStringExtra("user_email")
@@ -41,6 +44,13 @@ class ProfileActivity : AppCompatActivity() {
         editProfileButton.setOnClickListener {
             // Ejecutar el comportamiento de retroceso
             onBackPressed() // Esto hará que la actividad actual se cierre y regrese a la anterior
+        }
+
+        // Acción para el botón de ir a Login
+        loginButton.setOnClickListener {
+            // Abrir LoginActivity cuando se haga clic en el botón
+            val intent = Intent(this, Login::class.java) // Cambia "LoginActivity" al nombre de tu actividad de login
+            startActivity(intent)
         }
     }
 }
