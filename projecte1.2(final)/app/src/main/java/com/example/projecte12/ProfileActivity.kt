@@ -37,10 +37,10 @@ class ProfileActivity : AppCompatActivity() {
             .load("https://example.com/path/to/profile/image.jpg") // Aquí va tu URL de imagen
             .into(profileImage)
 
-        // Acción para editar el perfil (aquí puedes abrir otra actividad o un fragmento para editar)
+        // Acción para el botón de retroceder
         editProfileButton.setOnClickListener {
-            // Lógica para editar el perfil, por ejemplo, abrir una nueva actividad de edición
-            // startActivity(Intent(this, EditProfileActivity::class.java))
+            // Ejecutar el comportamiento de retroceso
+            onBackPressed() // Esto hará que la actividad actual se cierre y regrese a la anterior
         }
     }
 }

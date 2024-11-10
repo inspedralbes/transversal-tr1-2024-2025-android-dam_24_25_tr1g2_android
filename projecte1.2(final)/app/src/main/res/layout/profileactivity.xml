@@ -44,9 +44,9 @@
             android:id="@+id/editProfileButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_profile"
+            android:text="RETROCEDER"
             android:layout_marginTop="16dp"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
 </ScrollView>
