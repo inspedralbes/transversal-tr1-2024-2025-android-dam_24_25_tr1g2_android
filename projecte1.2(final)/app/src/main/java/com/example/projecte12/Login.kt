@@ -25,7 +25,7 @@ class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login)
+        setContentView(R.layout.login) // Asegúrate de que tu XML sigue siendo el mismo
 
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
@@ -44,16 +44,23 @@ class Login : AppCompatActivity() {
             if (validateLogin(email, password)) {
                 val loginRequest = LoginRequest(email, password)
 
-
+                // Realizar la solicitud de login usando Retrofit
                 RetroFit.api.login(loginRequest).enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         if (response.isSuccessful) {
                             Toast.makeText(this@Login, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show()
+
+                            // Supongamos que la respuesta contiene el nombre del usuario y el correo
+                            val userEmail = email // Aquí usas el email que el usuario ha introducido
+                            val userName = "Nombre Real" // Aquí deberías obtener el nombre real desde la respuesta del servidor
+
+                            // Enviar los datos de usuario al siguiente Intent
                             val intent = Intent(this@Login, Tienda::class.java)
+                            intent.putExtra("user_email", userEmail)
+                            intent.putExtra("user_name", userName) // Enviar el nombre real del usuario
                             startActivity(intent)
                             finish()
                         } else {
-                            println(call.request())
                             Toast.makeText(this@Login, "Email o contraseña incorrectos.", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -78,19 +85,14 @@ class Login : AppCompatActivity() {
             Toast.makeText(this, "Entrando como invitado.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, Tienda::class.java)
-            intent.putExtra("guest", true) // Extra para indicar modo invitado
+            intent.putExtra("guest", true) // Pasar el extra para indicar modo invitado
             startActivity(intent)
             finish()
         }
     }
 
     private fun validateLogin(email: String, password: String): Boolean {
-//        println("email: $email")
-//        println("password: $password")
+        // Validar que los campos de email y contraseña no estén vacíos
         return email.isNotEmpty() && password.isNotEmpty()
-//        val savedEmail = sharedPreferences.getString("email", null)
-//        val savedPassword = sharedPreferences.getString("password", null)
-//
-//        return email == savedEmail && password == savedPassword
     }
 }

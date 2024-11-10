@@ -82,6 +82,11 @@ class Tienda : AppCompatActivity() {
         val userEmail = sharedPreferences.getString("user_email", null)
         val userPassword = sharedPreferences.getString("user_password", null)
 
+
+
+
+
+
         val isGuest = intent.getBooleanExtra("guest", false)
 
         if (isGuest) {
@@ -103,7 +108,6 @@ class Tienda : AppCompatActivity() {
             skipLoginButton.visibility = Button.VISIBLE
         } else {
             // Configuración cuando no se ha iniciado sesión
-            userInfoTextView.text = "No has iniciado sesión"
             loginButtonInStore.visibility = Button.VISIBLE
             registerButtonInStore.visibility = Button.VISIBLE
             skipLoginButton.visibility = Button.VISIBLE

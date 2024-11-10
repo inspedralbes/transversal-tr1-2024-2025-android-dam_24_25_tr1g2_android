@@ -13,14 +13,14 @@
 
         <ImageButton
             android:id="@+id/profileImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="106dp"
+            android:layout_height="107dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_profile"
-            android:contentDescription="@string/profile_picture"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/profile_picture"
             android:scaleType="centerCrop"
-            android:layout_gravity="center" />
+            android:src="@drawable/ic_profile" />
 
         <TextView
             android:id="@+id/profileName"
