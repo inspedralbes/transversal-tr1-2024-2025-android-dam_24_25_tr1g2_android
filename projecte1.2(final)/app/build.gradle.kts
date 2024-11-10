@@ -55,6 +55,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("io.socket:socket.io-client:2.0.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     // Material Design dependency
     implementation("com.google.android.material:material:1.5.0")
@@ -63,6 +64,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.iid)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.play.services.base)
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
