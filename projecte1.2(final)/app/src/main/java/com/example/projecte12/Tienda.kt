@@ -43,7 +43,6 @@ class Tienda : AppCompatActivity() {
 
         // Inicializa las vistas
         productosContainer = findViewById(R.id.productosContainer)
-        botonCarrito = findViewById(R.id.botonCarrito)
         searchEditText = findViewById(R.id.searchEditText)
         userInfoTextView = findViewById(R.id.userInfoTextView)
         loginButtonInStore = findViewById(R.id.loginButtonInStore)

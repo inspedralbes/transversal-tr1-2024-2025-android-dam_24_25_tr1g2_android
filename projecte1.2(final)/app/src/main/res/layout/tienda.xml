@@ -102,15 +102,6 @@ android:visibility="gone"
 android:layout_marginBottom="8dp"/>
 
 
-<Button
-android:id="@+id/botonCarrito"
-style="@style/AppTheme.Button"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="@string/cart"
-android:layout_marginBottom="16dp"/>
-
-
 <LinearLayout
 android:id="@+id/productosContainer"
 android:layout_width="match_parent"
