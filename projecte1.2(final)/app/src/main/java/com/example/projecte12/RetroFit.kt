@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.example.projecte12.Api  // Importar tu propia interfaz Api
 
 object RetroFit {
-    private const val BASE_URL = "http://10.0.2.2:3001"  // Cambia esta URL por la tuya si es necesario
+    private const val BASE_URL = "http://tr1g2.dam.inspedralbes.cat:23462"  // Cambia esta URL por la tuya si es necesario
 
     // Crear un interceptor de logging para ver las solicitudes y respuestas
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
